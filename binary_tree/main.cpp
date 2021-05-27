@@ -26,7 +26,7 @@ tree *creat(){
     tree *a = (tree*)malloc(sizeof(tree));
     char _,trashbin;                          // _ 储存值，trashbin 是消耗每次输入的空格，（由于采取了%c，scanf会读入空格）
     scanf("%c%c",&_,&trashbin);
-    if (_ == '*')
+    if (_ == '*')                              //判断是否为终止符号，即我们约定“*”为终止符号
         {free(a); a = NULL;}
     else
     {

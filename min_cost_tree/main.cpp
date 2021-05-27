@@ -1,48 +1,48 @@
 #include<stdio.h>
 #include<stdlib.h>
-typedef struct known
+typedef struct relation                                                              //记录每条边的特性
 {
-    int x,y;
-    int power;
-    int flag ;
-}known;                                                                           //记录每条边的特性(两点、权重、标记值（0为初始，1为采用，2为弃置）)
-typedef struct each_point
+    int x,y;                                                                          //两点编号
+    int power;                                                                        //该边的权重
+    int flag ;                                                                        //标记值（0为初始，1为采用，2为弃置）
+}relation;
+typedef struct each_point                                                             //记录每个点的特性
 {
-    int point;
-    int group;
-}each_point;                                                                           //记录每个点的特性（序号、组别）
-void search(known *a,each_point *b);                                                  //寻找一次符合边
+    int point;                                                                        //点的编号
+    int group;                                                                        //点的组别
+}each_point;                                                                           
+void search(relation *a,each_point *b);                                               //寻找一次符合边
 int edge,num;                                                                         //edge为边数目，num为顶点数目
 int times = 1;                                                                        //组别编号
 int main()
 {
     printf("请分别输入图的 边数 和 顶点 个数：\n");
-    scanf("%d %d",&edge,&num);
+    scanf("%d %d",&edge,&num);                                                        //edge表示边数目，num表示顶点数目
     printf("请分别输入各个边的 两个顶点 及其 权重 ：\n");
-    known hh[edge];           //边关系
-    each_point one[num+1];        //顶点关系
-    for (int i = 0; i < edge;hh[i].flag = 0,i++)
-        scanf("%d %d %d",&hh[i].x,&hh[i].y,&hh[i].power);
+    relation edge_rel[edge];                                                          //边关系
+    each_point one[num+1];                                                            //顶点关系
+    for (int i = 0; i < edge;edge_rel[i].flag = 0,i++)
+        scanf("%d %d %d",&edge_rel[i].x,&edge_rel[i].y,&edge_rel[i].power);
     for (int i = 1; i <= num; i++)
         {
             one[i].group = 0;                                                         //初始化 顶点信息
             one[i].point = i;
         }
     for(int i = 1;i <= edge;i++)
-        search(hh,one);
+        search(edge_rel,one);
     printf("\n生成图的最小生成树的各边依次为：\n");                                      //输出结果
     for(int i = 0;i <= edge;i++)
-        if(hh[i].flag == 1) printf("(%d ,%d)\n",hh[i].x,hh[i].y);
+        if(edge_rel[i].flag == 1) printf("(%d ,%d)\n",edge_rel[i].x,edge_rel[i].y);
     return 0;
 }
-void search(known *a,each_point *b)
+void search(relation *a,each_point *b)
 {
     int temp = -1,pos = -1;
     int i;
     for (i = 0; i < edge; i++)  
         if(a[i].flag != 1 && a[i].flag != 2)
         {
-            if(a[i].flag == 0 && (b[a[i].x].group == b[a[i].y].group) && (b[a[i].x].group + b[a[i].y].group) > 0)   //弃置判断
+            if(a[i].flag == 0 && (b[a[i].x].group == b[a[i].y].group) && (b[a[i].x].group + b[a[i].y].group) > 0)       //弃置判断
                 a[i].flag = 2;
             if(a[i].flag == 0 )                                                                                         //选用判断
             {
