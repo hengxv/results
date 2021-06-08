@@ -37,7 +37,7 @@ int Qsort(int num[],int start,int end)                                          
         printf("%d  ",num[i]);
     printf("\n");
     if(low != start)  Qsort(num,1,low-1);
-    if(high != end && high+1 != end)   Qsort(num,high+1,end);
+    if(high != end )   Qsort(num,high+1,end);
     return 0;
 }
 void SSort(int num[],int count)                                                         //ºÚµ•—°‘Ò≈≈–Ú
